@@ -28,9 +28,21 @@ class MessageQueue:
 
     async def retry_failed_messages(self):
         """Retry processing failed messages."""
-        while self.failed_messages:
-            failed_message = self.failed_messages.pop(0)
-            await self.publish(failed_message["topic"], failed_message["message"])
+        #while self.failed_messages:
+            #failed_message = self.failed_messages.pop(0)
+            #await self.publish(failed_message["topic"], failed_message["message"])
+        retry_queue = self.failed_messages.copy()
+        self.failed_messages.clear()
+
+        for topic, message in retry_queue:
+            if topic in self.topics:
+                for callback in self.topics[topic]:
+                    try:
+                        await callback(message)
+                    except Exception:
+                        print(f"Retry failed for message: {message}")
+                        self.failed_messages.append((topic, message))
+
 
 
 # Example callback function for subscribers
@@ -38,3 +50,7 @@ async def example_callback(message):
     print(f"Processing message: {message}")
     if "fail" in message:
         raise ValueError("Simulated failure")
+
+
+
+
