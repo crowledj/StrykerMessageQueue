@@ -1,1 +1,7 @@
-./venv/*
+./venv/
+services/.pytest_cache/*
+services/service_publish/__pycache__/*.pyc
+services/service_publish/service_a.log
+services/service_publish/Dockerfile
+services/service_subscribe/Dockerfile
+services/service_subscribe/__pycache__/*.pyc
