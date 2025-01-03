@@ -1,7 +1,9 @@
 from fastapi import FastAPI, WebSocket
 import asyncio
 import sys
+sys.path.append('.')
 sys.path.append('../')
+sys.path.append('../../')
 from mypythonlib.myfunctions import MessageQueue # Import my custom library
 
 

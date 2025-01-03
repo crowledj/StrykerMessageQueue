@@ -1,17 +1,20 @@
 import asyncio
 import pytest
 from httpx import AsyncClient
-from fastapi.testclient import TestClient
 import sys
+#Allow tests to be run from various location in the directory
+sys.path.append('.')
 sys.path.append('../')
 sys.path.append('../../')
-from service_publish.main import app
+sys.path.append('services/service_subscribe/')
+sys.path.append('services/service_publish/')
 import mypythonlib
 from mypythonlib.myfunctions import MessageQueue
 from typing import Callable
 
 
 mq = MessageQueue()
+
 
 @pytest.mark.asyncio
 async def test_message_processing():
@@ -34,19 +37,3 @@ async def test_message_processing():
     assert processed_messages == [{"content": "Test message"}]
 
 
-#@pytest.mark.asyncio
-#async def test_consume_message_from_queue():
-#    mq = MessageQueue()
-
-    # Add a message to the queue
-#    await mq.publish("test_topic", {"content": "Message for B"})
-
-    # Simulate Service B consuming the message
-    #sync with AsyncClient(base_url="http://testserver",app=app) as client:
-    #    response = await client.get("/consume")
-
-#    with TestClient(app) as client:
-#        response = client.get("/startup")
-
-#    assert response.status_code == 200
-#    assert response.json() == {"detail": "Message processed"}
