@@ -23,11 +23,11 @@ print_header "Setting Up Python Virtual Environment"
 if [ ! -d "venv" ]; then
     python3 -m venv venv
 fi
-source venv/bin/activate
+source venv/Scripts/activate
 
 # Step 3: Install Dependencies
 print_header "Installing Dependencies"
-pip install --upgrade pip
+#pip install --upgrade pip
 pip install -r requirements.txt
 
 print_header "Installing Custom Library: MessageQueue"
