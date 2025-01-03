@@ -10,14 +10,14 @@ from mypythonlib.myfunctions import MessageQueue # Import my custom library
 app = FastAPI()
 mq = MessageQueue()
 
-@app.websocket("/ws/")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
+#@app.websocket("/ws/")
+#async def websocket_endpoint(websocket: WebSocket):
+#    await websocket.accept()
     # Subscribe a WebSocket to a topic
-    async def websocket_callback(message):
-        await websocket.send_text(json.dumps(message))
+#    async def websocket_callback(message):
+#        await websocket.send_text(json.dumps(message))
 
-    mq.subscribe("topic1", websocket_callback)
+#    mq.subscribe("topic1", websocket_callback)
 
 @app.on_event("startup")
 async def startup_event():
