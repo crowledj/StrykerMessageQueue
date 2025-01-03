@@ -30,7 +30,7 @@ async def test_failed_message_retry():
         received_messages.append(message)
 
     mq.subscribe("test_topic", failing_callback)
-    #mq.subscribe("test_topic", successful_callback)
+    mq.subscribe("test_topic", successful_callback)
 
     await mq.publish("test_topic", {"content": "Will fail"})
     await mq.retry_failed_messages()
