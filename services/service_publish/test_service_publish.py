@@ -15,7 +15,8 @@ mq = MessageQueue()
 # Create a TestClient instance
 client = TestClient(app)
 
-def test_publish_message():
+@pytest.mark.asyncio
+async def test_publish_message():
     # Define the message to publish
     
     topic = "test_topic"
@@ -32,6 +33,36 @@ def test_publish_message():
     
     # Assert the response payload matches the expected output
     assert response.json() == {"status": "Message published"}
+
+
+@pytest.mark.asyncio
+async def test_publish_missing_topic():
+    """Test publishing with a missing topic field."""
+    payload = {"message": {"key": "value"}}
+    response = client.post("/publish/", json=payload)
+    assert response.status_code == 422  # Unprocessable Entity (validation error)
+
+@pytest.mark.asyncio
+async def test_publish_missing_message():
+    """Test publishing with a missing message field."""
+    payload = {"topic": "test_topic"}
+    response = client.post("/publish/", json=payload)
+    assert response.status_code == 422  # Unprocessable Entity (validation error)
+
+@pytest.mark.asyncio
+async def test_publish_empty_payload():
+    """Test publishing with an empty payload."""
+    response = client.post("/publish/", json={})
+    assert response.status_code == 422  # Unprocessable Entity
+
+@pytest.mark.asyncio
+async def test_publish_invalid_data_types():
+    """Test publishing with invalid data types for topic or message."""
+    payload = {"topic": 123, "message": "invalid_message"}
+    response = client.post("/publish/", json=payload)
+    assert response.status_code == 422  # Unprocessable Entity
+
+
 
 #@pytest.mark.asyncio
 #async def test_publish_message():
