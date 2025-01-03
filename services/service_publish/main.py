@@ -2,6 +2,8 @@ from fastapi import FastAPI
 import sys
 import asyncio
 sys.path.append('../../')
+sys.path.append('../')
+sys.path.append('.')
 from mypythonlib.myfunctions import MessageQueue # Import my custom library
 
 app = FastAPI()
